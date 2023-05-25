@@ -3,8 +3,8 @@ console.warn('Задание II = вторая задача');
 // const input1 = 50;
 // const input2 = 100;
 
-const input1 = prompt("Игра 2: введите первое число ОТ");
-const input2 = prompt("Игра 2: введите второе число ДО");
+const input1 = +prompt("Игра 2: введите первое число ОТ");
+const input2 = +prompt("Игра 2: введите второе число ДО");
 
 
 const inputMin = Math.min(input1, input2);
@@ -22,31 +22,26 @@ let tryAnswer;
 
 // console.log(tryAnswer);
 
-let i = 0;
 let direction = '';
 while (guessNumber3 !== +tryAnswer) {
   // console.log("цикл", i++)
-  tryAnswer = prompt(`${direction} угадай число от ${inputMin} до ${inputMax}`);
+  tryAnswer = prompt(`${direction} угадай число от ${inputMin} до ${inputMax}, количество попыток ${maxTry}`);
 
   if (tryAnswer === null) {
     console.log("игра отменена");
+    alert(`Вы отменили игру`)
     break;
-  };
+  }
 
-  if (Number.isFinite(+tryAnswer)) {
+  tryAnswer = +tryAnswer; // перевел струку в число
 
-    // console.log("найдено", tryArray.find((element) => element === +tryAnswer));
-    if (tryArray.find((element) => element === +tryAnswer) === undefined) {
-      tryArray.push(+tryAnswer);
-      maxTry -= 1;
-    } else {
-      console.log("это число вы уже вводили")
-    }
+  if (Number.isFinite(tryAnswer)) {
 
     // console.log("цикл", i, "введено число", +tryAnswer, "попыток осталось", maxTry, "попытки", tryArray);
 
-    if (guessNumber3 === +tryAnswer) {
+    if (guessNumber3 === tryAnswer) {
       console.log(`Вы угадали, все Правильно! ${guessNumber3}`);
+      alert(`Вы угадали! Правильный ответ : ${tryAnswer}`)
       break;
     }
 
@@ -63,6 +58,15 @@ while (guessNumber3 !== +tryAnswer) {
     if (+tryAnswer < guessNumber3) {
       console.log("Больше!");
       direction = 'Больше!';
+    }
+
+    // console.log("найдено", tryArray.find((element) => element === +tryAnswer));
+    if (tryArray.find((element) => element === tryAnswer) === undefined) {
+      tryArray.push(tryAnswer);
+      maxTry -= 1;
+    } else {
+      console.log("это число вы уже вводили");
+      direction += ` и это, ты это число ${tryAnswer} уже вводил, `;
     }
 
   }
